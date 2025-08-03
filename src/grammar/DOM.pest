@@ -1,0 +1,17 @@
+WHITESPACE = _{ " " | "\t" | "\n" | "\r" }
+_QUOTE = _{ "\"" }
+left_chevron = _{ "<" }
+right_chevron = _{ ">" }
+tag_name = @{(!(WHITESPACE | ">") ~ ANY)*}
+attr_name = @{ASCII_ALPHA+}
+attr_value = @{ (!"\"" ~ ANY)* }
+tag_attr = {attr_name ~ "=" ~ "\"" ~ attr_value ~ "\"" }
+_opening_tag = _{ left_chevron ~ PUSH(tag_name) ~ tag_attr* ~ right_chevron }
+_closing_tag = _{ left_chevron ~ "/" ~ PEEK ~ right_chevron }
+heading_level = @{ASCII_NONZERO_DIGIT}
+heading = { left_chevron ~ "h" ~ PUSH(heading_level) ~ right_chevron ~ heading_content ~ left_chevron ~ "/" ~ "h" ~ POP ~ right_chevron }
+heading_content = {(!left_chevron ~ ANY)*}
+children={heading | text_content}
+text_content = {ASCII_ALPHA+}
+element = { _opening_tag ~ WHITESPACE* ~ children* ~ WHITESPACE* ~ _closing_tag }
+document = {SOI ~ WHITESPACE* ~ (heading | element) ~ WHITESPACE* ~ EOI}
