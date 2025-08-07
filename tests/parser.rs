@@ -7,35 +7,35 @@ mod tests {
 
     #[test]
     fn test_parse_html() {
-        // let input = r#"
-        //     <div class="root">
-        //         <h1>Hello, world!</h1>
-        //         <!-- Container with items -->
-        //         <div class="container">
-        //             <div class="item item1">
-        //                 <h2>Foo</h2>
-        //                 <!-- This is a
-        //                 multi-line comment. -->
-        //                 <desc>
-        //                     This is very nice item.
-        //                 </desc>
-        //                 <p>It costs 100$</p>
-        //             </div>
-        //             <div class="item item2">
-        //                 <h2>Bar</h2>
-        //                 <desc>
-        //                     This is small item
-        //                 </desc>
-        //                 <p>It costs 20$</p>
-        //             </div>
-        //         </div>
-        //     </div>
-        // "#;
-                let input = "
-                <div class=\"root\" foo=\"bar\">
-                             f
+        let input = r#"
+            <div class="root">
+                <h1>Hello, world!</h1>
+                <!-- Container with items -->
+                <div class="container">
+                    <div class="item item1">
+                        <h2>Foo</h2>
+                        <!-- This is a
+                        multi-line comment. -->
+                        <desc>
+                            This is very nice item.
+                        </desc>
+                        <p>It costs 100$</p>
+                    </div>
+                    <div class="item item2">
+                        <h2>Bar</h2>
+                        <desc>
+                            This is small item
+                        </desc>
+                        <p>It costs 20$</p>
+                    </div>
                 </div>
-        ";
+            </div>
+        "#;
+        //         let input = "
+        //         <div class=\"root\" foo=\"bar\">
+        //                      f
+        //         </div>
+        // ";
         let expected_result = elem(
         "div".to_string(),
         {
