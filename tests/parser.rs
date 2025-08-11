@@ -31,11 +31,6 @@ mod tests {
                 </div>
             </div>
         "#;
-        //         let input = "
-        //         <div class=\"root\" foo=\"bar\">
-        //                      f
-        //         </div>
-        // ";
         let expected_result = elem(
         "div".to_string(),
         {
@@ -43,9 +38,9 @@ mod tests {
             attrs.insert("class".to_string(), "root".to_string());
             attrs
         },
-        child_nodes(vec![
+        Children::Nodes(vec![
             heading(1, "Hello, world!".to_string()),
-            one_line_comment("Container with items".to_string()),
+            comment("Container with items".to_string()),
             elem(
                 "div".to_string(),
                 {
@@ -53,7 +48,7 @@ mod tests {
                     attrs.insert("class".to_string(), "container".to_string());
                     attrs
                 },
-                child_nodes(vec![
+                Children::Nodes(vec![
                     elem(
                         "div".to_string(),
                         {
@@ -61,9 +56,9 @@ mod tests {
                             attrs.insert("class".to_string(), "item item1".to_string());
                             attrs
                         },
-                            child_nodes(vec![
+                            Children::Nodes(vec![
                                 heading(2, "Foo".to_string()),
-                                multi_line_comment("This is a\nmulti-line comment.".to_string()),
+                                comment("This is a\nmulti-line comment.".to_string()),
                                 desc("This is very nice item.".to_string()),
                                 text("It costs 100$".to_string())
                             ])
@@ -75,7 +70,7 @@ mod tests {
                             attrs.insert("class".to_string(), "item item2".to_string());
                             attrs
                         },
-                        child_nodes(vec![
+                        Children::Nodes(vec![
                             heading(2, "Bar".to_string()),
                             desc("This is small item".to_string()),
                             text("It costs 20$".to_string())
@@ -90,7 +85,7 @@ mod tests {
 
         print_ascii_tree(Ok(dom.clone().into_inner()));
 
-        let result = parse_dom_tree(dom);
+        let result = parse_nodes(dom).unwrap();
 
         assert_eq!(&result, &expected_result);
     }
