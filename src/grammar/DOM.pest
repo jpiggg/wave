@@ -22,4 +22,5 @@ _comment_block = _{_comment_start ~ comment ~ _comment_end}
 children = {_comment_block | heading | description | element | text_content}
 text_content = {(!_left_chevron ~ ANY)+}
 element = { _opening_tag ~ children* ~ _closing_tag }
-document = {SOI ~ (heading | element) ~ EOI}
+eoi = _{ !ANY }
+document = {SOI ~ (heading | element) ~ eoi}
